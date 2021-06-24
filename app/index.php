@@ -1,6 +1,8 @@
 <?php
+const FOLDER_INPUTS = 'inputs';
 
-const BASE_DIR = __DIR__;
+const DIR_BASE   = __DIR__;
+const DIR_INPUTS = DIR_BASE . DIRECTORY_SEPARATOR . FOLDER_INPUTS. DIRECTORY_SEPARATOR;
 
 spl_autoload_register(
     function ($class_name) {

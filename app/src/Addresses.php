@@ -3,7 +3,7 @@
 class Addresses extends FileReader
 {
     protected const FILENAME    = 'addresses.txt';
-    private const REGEX_ADDRESS = '/^\d+\w+(.*)$/';
+    private const REGEX_ADDRESS = '/^\d+\s+(.*)$/';
 
     public function getParsedInput(string $line): ?string
     {

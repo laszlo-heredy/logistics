@@ -6,7 +6,18 @@ class Exercise
 
     public function __construct()
     {
-        $this->output = 'okay';
+        $this->doTheExercise();
+    }
+
+    public function doTheExercise(): void
+    {
+        $addresses = new Addresses();
+        $drivers   = new Drivers();
+
+        $this->output = [
+            $addresses->getIterator(),
+            $drivers->getIterator(),
+        ];
     }
 
     public function __toString(): string

@@ -18,22 +18,31 @@ abstract class FileReader
         if (!(static::FILENAME)) {
             throw new \LogicException('Incorrectly-configured superclass for FileReader: missing FILENAME definition.');
         }
+
+        $this->doReadContents();
     }
 
     private final function doReadContents(): void
     {
-        if (!(file_exists($filename = BASE_DIR . DIRECTORY_SEPARATOR . static::FILENAME))) {
-            throw new \Exception('File System error: file not found in inputs directory:' . static::FILENAME);
+        if (!(file_exists($filename = DIR_INPUTS . static::FILENAME))) {
+            throw new \Exception('File System error: path not found: '. $filename);
         }
 
         $handle = fopen($filename, 'r');
 
         while ($line = fgets($handle)) {
-            if (null === $line) {
+            if (null === $input = $this->getParsedInput($line)) {
                 continue;
             }
 
-            $this->iterator[] = $this->getParsedInput($line);
+            $this->iterator[] = $input;
         }
+
+        fclose($handle);
+    }
+
+    public function getIterator(): iterable
+    {
+        return (array)$this->iterator;
     }
 }
