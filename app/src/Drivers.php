@@ -2,8 +2,7 @@
 
 class Drivers extends FileReader
 {
-    protected const FILENAME    = 'drivers.txt';
-    private const REGEX_ADDRESS = '/^\d+\w+(.*)$/';
+    protected const FILENAME = 'drivers.txt';
 
     public function getParsedInput(string $line): ?string
     {
