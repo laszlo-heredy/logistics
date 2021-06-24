@@ -2,6 +2,8 @@
 
 class Exercise
 {
+    public const CHARACTER_PAIR_DRIVER_ADDRESS_SPLIT = '|';
+
     protected $drivers   = [];
     protected $addresses = [];
 
@@ -46,7 +48,8 @@ class Exercise
         foreach ($this->drivers as $driver) {
             foreach ($this->addresses as $address) {
                 $suitability_score = Util::getSuitabilityScore($address, $driver);
-                $pairing           = "$driver $address";
+                $delimiter         = self::CHARACTER_PAIR_DRIVER_ADDRESS_SPLIT;
+                $pairing           = "$driver$delimiter$address";
 
                 $this->index_driver_address_to_ss[$pairing]               = $suitability_score;
                 $this->index_ss_to_array_of_pairs["$suitability_score"][] = $pairing;
