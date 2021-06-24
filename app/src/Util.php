@@ -4,26 +4,65 @@ class Util
 {
     public const REGEX_VOWELS = '/aeiou/i';
 
+    protected const MULTIPLIER_EVEN_VOWEL          = 1.5;
+    protected const MULTIPLIER_ODD_CONSONANT       = 1.0;
+    protected const MULTIPLIER_COMMON_FACTORS      = 1.5;
+    protected const MULTIPLIER_COMMON_FACTORS_NONE = 1.0;
+
     /**
-     * Returns a number (float) based on this super-secret formula:
+     * Returns a number (float) based on our super-secret formula:
      *
-     * If the length of the shipment's destination street name is even, the base suitability score (SS) is the number of vowels in the driver’s name multiplied by 1.5.
-     * If the length of the shipment's destination street name is odd, the base SS is the number of consonants in the driver’s name multiplied by 1.
-     * If the length of the shipment's destination street name shares any common factors (besides 1) with the length of the driver’s name, the SS is increased by 50% above the base SS.
+     * Rules:
+     * 1. If the length of the shipment's destination street name is even, the base suitability score (SS) is the number of vowels in the driver’s name multiplied by 1.5.
+     * 2. If the length of the shipment's destination street name is odd, the base SS is the number of consonants in the driver’s name multiplied by 1.
+     * 3. If the length of the shipment's destination street name shares any common factors (besides 1) with the length of the driver’s name, the SS is increased by 50% above the base SS.
+     *
+     * @param string $address
+     * @param string $driver
+     *
+     * @throws Exception in case of factoring negative numbers.
+     *
+     * @return float
+     */
+    public static function getSuitabilityScore(string $address, string $driver): float
+    {
+        return static::getBaseSuitabilityScore($address, $driver) * static::getMultiplierCommonFactors($address, $driver);
+    }
+
+    /**
+     * Handles rules 1 and 2 of getSuitabilityScore().
      *
      * @param string $address
      * @param string $driver
      *
      * @return float
      */
-    public static function getSuitabilityScore(string $address, string $driver): float
-    {
-
-    }
-
     public static function getBaseSuitabilityScore(string $address, string $driver): float
     {
+        if (static::isStringLengthEven($address)) {
+            return static::MULTIPLIER_EVEN_VOWEL * static::getCountConsonants($driver);
+        }
 
+        return static::MULTIPLIER_ODD_CONSONANT * static::getCountConsonants($driver);
+    }
+
+    /**
+     * Returns float multiplier for the third rule of getSuitabilityScore().
+     *
+     * @param $address
+     * @param $driver
+     *
+     * @throws Exception
+     *
+     * @return float
+     */
+    public static function getMultiplierCommonFactors($address, $driver): float
+    {
+        if (static::isSharesFactors(strlen($address), strlen($driver))) {
+            return static::MULTIPLIER_COMMON_FACTORS;
+        }
+
+        return static::MULTIPLIER_COMMON_FACTORS_NONE;
     }
 
     /**
