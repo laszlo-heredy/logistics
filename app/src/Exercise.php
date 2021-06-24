@@ -2,22 +2,22 @@
 
 class Exercise
 {
+    protected $drivers   = [];
+    protected $addresses = [];
+
     protected $output;
 
     public function __construct()
     {
+        $this->addresses = (new Addresses())->getIterator();
+        $this->drivers   = (new Drivers())->getIterator();
+
         $this->doTheExercise();
     }
 
     public function doTheExercise(): void
     {
-        $addresses = new Addresses();
-        $drivers   = new Drivers();
 
-        $this->output = [
-            $addresses->getIterator(),
-            $drivers->getIterator(),
-        ];
     }
 
     public function __toString(): string
