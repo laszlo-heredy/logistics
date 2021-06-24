@@ -6,9 +6,16 @@ class Exercise
     protected $addresses = [];
 
     /**
-     * @var array keyed by both "$driver $address" and "$address $driver", each with value suitability score for the pair.
+     * @var array keyed by "$driver $address", with value suitability score for the pair.
      */
-    protected $index  = [];
+    protected $index_driver_address_to_ss = [];
+
+    /**
+     * @var array keyed by suitability score, with value array of "$driver $address" values that have the same score.
+     */
+    protected $index_ss_to_array_of_pairs = [];
+
+
     protected $output = [];
 
     public function __construct()
@@ -23,7 +30,10 @@ class Exercise
     {
         $this->doFillIndexes();
 
-        $this->output = $this->index;
+        $this->output = [
+            $this->index_driver_address_to_ss,
+            $this->index_ss_to_array_of_pairs,
+        ];
     }
 
     /**
@@ -36,8 +46,10 @@ class Exercise
         foreach ($this->drivers as $driver) {
             foreach ($this->addresses as $address) {
                 $suitability_score = Util::getSuitabilityScore($address, $driver);
+                $pairing           = "$driver $address";
 
-                $this->index["$driver $address"] = $suitability_score;
+                $this->index_driver_address_to_ss[$pairing]               = $suitability_score;
+                $this->index_ss_to_array_of_pairs["$suitability_score"][] = $pairing;
             }
         }
     }
