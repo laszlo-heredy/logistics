@@ -1,0 +1,7 @@
+Welcome!
+
+Simply clone this repo, make sure "brew" and "docker" are installed locally, and run ./setup.sh.
+
+This will download a simple docker image and curl localhost, which will run php on app/index.php.
+
+If that does notwork, running app/index.php locally should be fine too, as long as you have PHP installed locally.
