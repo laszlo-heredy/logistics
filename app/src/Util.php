@@ -40,7 +40,7 @@ class Util
     public static function getBaseSuitabilityScore(string $address, string $driver): float
     {
         if (static::isStringLengthEven($address)) {
-            return static::MULTIPLIER_EVEN_VOWEL * static::getCountConsonants($driver);
+            return static::MULTIPLIER_EVEN_VOWEL * static::getCountVowels($driver);
         }
 
         return static::MULTIPLIER_ODD_CONSONANT * static::getCountConsonants($driver);
