@@ -3,12 +3,21 @@
 echo Make sure brew and Docker are installed on machine please. Starting in a few seconds...
 sleep 3
 
-docker run -i -t -p "80:80" -v ${PWD}/app:/app -v ${PWD}/mysql:/var/lib/mysql mattrayner/lamp:latest &
+docker run -p "80:80" -v ${PWD}/app:/app mattrayner/lamp:latest-1804 &
 
-echo This might take some time. Waiting 60 seconds.
-sleep 30
-echo 30 seconds to go
-sleep 30
+echo This might take some time. Waiting 30 seconds.
+sleep 15
+echo 15 seconds to go
+sleep 15
 echo ok here goes nothing!
+echo ...
+echo ...
+echo
+echo $ curl localhost
 
 curl localhost
+
+echo
+echo Done.
+echo
+echo Type curl localhost to run again.
