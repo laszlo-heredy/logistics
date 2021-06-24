@@ -4,6 +4,7 @@ class Exercise
 {
     protected $drivers   = [];
     protected $addresses = [];
+    protected $index     = [];
 
     protected $output;
 
